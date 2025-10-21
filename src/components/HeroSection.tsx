@@ -11,8 +11,10 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [isScrolling, setIsScrolling] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const animationRef = useRef<number | null>(null)
 
   // Complete array of logo filenames
   const logoFiles = [
@@ -87,6 +89,9 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Don't update state during custom scroll animations
+      if (isScrolling) return
+      
       const scrollTop = window.scrollY
       
       // Clear any existing timeout
@@ -111,73 +116,65 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
+    
     return () => {
       window.removeEventListener('scroll', handleScroll)
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
       }
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
     }
-  }, [isScrolled])
+  }, [isScrolled, isScrolling])
 
-  const scrollToTop = () => {
-    const startPosition = window.pageYOffset
-    const distance = -startPosition
-    const duration = 1000 // 1 second for scroll to top
-    let startTime: number | null = null
+  // Advanced easing function with momentum
+  const easeOutQuart = (t: number): number => {
+    return 1 - Math.pow(1 - t, 4)
+  }
 
-    // Easing function for smooth deceleration
-    const easeInOutCubic = (t: number): number => {
-      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
-    }
+  const easeInOutQuart = (t: number): number => {
+    return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2
+  }
 
-    const animateScroll = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime
-      const timeElapsed = currentTime - startTime
-      const progress = Math.min(timeElapsed / duration, 1)
+  const smoothScrollTo = (targetY: number, duration: number = 1500) => {
+    if (isScrolling) return // Prevent multiple scrolls
+    
+    setIsScrolling(true)
+    const startY = window.pageYOffset
+    const distance = targetY - startY
+    const startTime = performance.now()
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
       
-      const easedProgress = easeInOutCubic(progress)
-      const currentPosition = startPosition + (distance * easedProgress)
+      // Use different easing for different directions
+      const easedProgress = distance > 0 ? easeOutQuart(progress) : easeInOutQuart(progress)
+      const currentY = startY + (distance * easedProgress)
       
-      window.scrollTo(0, currentPosition)
+      window.scrollTo(0, currentY)
       
       if (progress < 1) {
-        requestAnimationFrame(animateScroll)
+        animationRef.current = requestAnimationFrame(animate)
+      } else {
+        setIsScrolling(false)
+        animationRef.current = null
       }
     }
 
-    requestAnimationFrame(animateScroll)
+    animationRef.current = requestAnimationFrame(animate)
+  }
+
+  const scrollToTop = () => {
+    smoothScrollTo(0, 1200)
   }
 
   const scrollToNextSection = () => {
     const nextSection = document.querySelector('main')
     if (nextSection) {
       const targetPosition = nextSection.offsetTop
-      const startPosition = window.pageYOffset
-      const distance = targetPosition - startPosition
-      const duration = 1200 // 1.2 seconds for smooth scroll
-      let startTime: number | null = null
-
-      // Easing function for smooth deceleration
-      const easeInOutCubic = (t: number): number => {
-        return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
-      }
-
-      const animateScroll = (currentTime: number) => {
-        if (startTime === null) startTime = currentTime
-        const timeElapsed = currentTime - startTime
-        const progress = Math.min(timeElapsed / duration, 1)
-        
-        const easedProgress = easeInOutCubic(progress)
-        const currentPosition = startPosition + (distance * easedProgress)
-        
-        window.scrollTo(0, currentPosition)
-        
-        if (progress < 1) {
-          requestAnimationFrame(animateScroll)
-        }
-      }
-
-      requestAnimationFrame(animateScroll)
+      smoothScrollTo(targetPosition, 1800)
     }
   }
 
@@ -294,3 +291,4 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
     </div>
   )
 }
+
