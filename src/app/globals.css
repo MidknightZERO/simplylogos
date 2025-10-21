@@ -19,6 +19,16 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Account for sticky header */
+}
+
+/* Disable scroll anchoring that causes snap-back */
+* {
+  overflow-anchor: none;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

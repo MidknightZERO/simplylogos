@@ -1,14 +1,17 @@
 'use client'
 
+import { useState } from 'react'
 import { useUser } from '@/hooks/useUser'
 import LogoGenerator from '@/components/LogoGenerator'
 import HeroSection from '@/components/HeroSection'
+import StickyHeader from '@/components/StickyHeader'
 import LogoRotation from '@/components/LogoRotation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase/client'
 
 export default function HomePage() {
   const { user, loading } = useUser()
+  const [isScrolled, setIsScrolled] = useState(false)
 
   if (loading) {
     return (
@@ -21,8 +24,11 @@ export default function HomePage() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-50">
+        {/* Sticky Header */}
+        <StickyHeader isVisible={isScrolled} />
+        
         {/* Hero Section */}
-        <HeroSection />
+        <HeroSection onScrollStateChange={setIsScrolled} />
 
         {/* Main Content */}
         <main className="relative z-10">
