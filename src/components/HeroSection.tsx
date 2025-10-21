@@ -99,20 +99,20 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
     <div className={`transition-all duration-500 ease-in-out ${className}`}>
       {/* Hero Section */}
       <div className={`relative overflow-hidden transition-all duration-500 ease-in-out ${
-        isScrolled ? 'h-20' : 'h-screen'
+        isScrolled ? 'h-20' : 'min-h-screen'
       }`}>
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-[#e7e7e7] to-purple-50"></div>
         
         {/* Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
-          {/* Logo Container */}
-          <div className={`transition-all duration-500 ease-in-out ${
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4">
+          {/* Logo Container - Centered */}
+          <div className={`flex flex-col items-center justify-center transition-all duration-500 ease-in-out ${
             isScrolled ? 'scale-50' : 'scale-100'
           }`}>
             <div className={`relative transition-all duration-500 ease-in-out ${
               isScrolled ? 'w-16 h-16' : 'w-96 h-96'
-            } mb-8 flex items-center justify-center`}>
+            } mb-8`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`/Logos/${currentLogo}`}
