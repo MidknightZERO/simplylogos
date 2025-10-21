@@ -27,7 +27,7 @@ export default function HomePage() {
         {/* Main Content */}
         <main className="relative z-10">
           {/* How It Works Section */}
-          <div className="py-20 bg-white">
+          <div className="py-20 bg-[#e7e7e7]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
                 <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -163,7 +163,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header with Logo Rotation */}
-      <header className="bg-white shadow">
+      <header className="bg-[#e7e7e7] shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">

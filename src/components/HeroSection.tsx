@@ -102,7 +102,7 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
         isScrolled ? 'h-20' : 'h-screen'
       }`}>
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-[#e7e7e7] to-purple-50"></div>
         
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
@@ -111,8 +111,8 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
             isScrolled ? 'scale-50' : 'scale-100'
           }`}>
             <div className={`relative transition-all duration-500 ease-in-out ${
-              isScrolled ? 'w-16 h-16' : 'w-80 h-80'
-            } mb-8`}>
+              isScrolled ? 'w-16 h-16' : 'w-96 h-96'
+            } mb-8 flex items-center justify-center`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`/Logos/${currentLogo}`}
@@ -121,13 +121,6 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
                 style={{ imageRendering: 'auto' }}
               />
             </div>
-            
-            {/* Title */}
-            <h1 className={`text-center font-bold text-gray-900 transition-all duration-500 ease-in-out ${
-              isScrolled ? 'text-2xl' : 'text-6xl'
-            } mb-4`}>
-              SimplyLogos
-            </h1>
             
             {/* Subtitle - only show when not scrolled */}
             {!isScrolled && (
@@ -169,11 +162,11 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
 
       {/* Sticky Header - appears when scrolled */}
       {isScrolled && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-200">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-[#e7e7e7]/95 backdrop-blur-sm shadow-lg border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-4">
               <div className="flex items-center">
-                <div className="relative w-8 h-8 mr-3">
+                <div className="relative w-8 h-8">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`/Logos/${currentLogo}`}
@@ -182,7 +175,6 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
                     style={{ imageRendering: 'auto' }}
                   />
                 </div>
-                <span className="text-xl font-bold text-gray-900">SimplyLogos</span>
               </div>
               <div className="flex items-center space-x-4">
                 <Link
