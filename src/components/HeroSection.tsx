@@ -100,7 +100,7 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
     <div className={`transition-all duration-500 ease-in-out ${className}`}>
       {/* Hero Section */}
       <div className={`relative overflow-hidden transition-all duration-500 ease-in-out ${
-        isScrolled ? 'h-20' : 'min-h-screen'
+        isScrolled ? 'h-20' : 'h-screen'
       }`}>
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-[#e7e7e7] to-purple-50"></div>
