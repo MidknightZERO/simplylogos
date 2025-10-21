@@ -93,14 +93,40 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const smoothScrollTo = (targetY: number, duration: number = 2000) => {
+    const startY = window.pageYOffset
+    const distance = targetY - startY
+    const startTime = performance.now()
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+    }
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const easedProgress = easeInOutCubic(progress)
+      const currentY = startY + (distance * easedProgress)
+      
+      window.scrollTo(0, currentY)
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      }
+    }
+
+    requestAnimationFrame(animate)
+  }
+
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    smoothScrollTo(0, 2000) // 2 seconds
   }
 
   const scrollToNextSection = () => {
     const nextSection = document.querySelector('main')
     if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const targetPosition = nextSection.offsetTop
+      smoothScrollTo(targetPosition, 2500) // 2.5 seconds
     }
   }
 
