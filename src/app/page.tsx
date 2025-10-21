@@ -5,6 +5,8 @@ import { useUser } from '@/hooks/useUser'
 import LogoGenerator from '@/components/LogoGenerator'
 import HeroSection from '@/components/HeroSection'
 import StickyHeader from '@/components/StickyHeader'
+import ScrollToTopButton from '@/components/ScrollToTopButton'
+import Footer from '@/components/Footer'
 import LogoRotation from '@/components/LogoRotation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase/client'
@@ -27,6 +29,9 @@ export default function HomePage() {
         {/* Sticky Header */}
         <StickyHeader isVisible={isScrolled} />
         
+        {/* Scroll to Top Button */}
+        <ScrollToTopButton />
+        
         {/* Hero Section */}
         <HeroSection onScrollStateChange={setIsScrolled} />
 
@@ -45,35 +50,144 @@ export default function HomePage() {
               </div>
               
               <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-3">
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full">
-                    <span className="text-2xl font-bold text-indigo-600">1</span>
+                <div className="text-center group">
+                  <div className="flex items-center justify-center w-20 h-20 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:scale-110 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-gray-900">Describe your business</h3>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Text</h3>
                   <p className="mt-2 text-gray-600">
-                    Tell us about your business name, industry, and any specific elements you&apos;d like in your logo.
+                    Enter the text you want on your logo. Your business name, tagline, or any text that represents your brand.
                   </p>
                 </div>
                 
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full">
-                    <span className="text-2xl font-bold text-indigo-600">2</span>
+                <div className="text-center group">
+                  <div className="flex items-center justify-center w-20 h-20 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:scale-110 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+                    </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-gray-900">AI generates your logo</h3>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Elements</h3>
                   <p className="mt-2 text-gray-600">
-                    Our advanced AI creates a professional, unique logo tailored to your business needs.
+                    Describe the elements you&apos;d like in your logo. Colors, shapes, icons, or any specific design elements that represent your business.
                   </p>
                 </div>
                 
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full">
-                    <span className="text-2xl font-bold text-indigo-600">3</span>
+                <div className="text-center group">
+                  <div className="flex items-center justify-center w-20 h-20 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:scale-110 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-gray-900">Download in PNG format</h3>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Generate</h3>
                   <p className="mt-2 text-gray-600">
-                    Get your high-quality logo ready for immediate use across all your marketing materials.
+                    Wait a few seconds and get your new business logo in PNG format. High-quality, professional design ready for immediate use.
                   </p>
                 </div>
+              </div>
+
+              <div className="mt-12 text-center">
+                <p className="text-sm text-gray-500">
+                  <span className="font-semibold">1 credit per logo</span> • Instant download • Commercial use included
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Pricing Section */}
+          <div className="py-20 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                  Simple, Transparent Pricing
+                </h2>
+                <p className="mt-4 text-lg text-gray-600">
+                  Pay only for what you use. No hidden fees, no subscriptions required.
+                </p>
+              </div>
+              
+              <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                {/* Single Credit */}
+                <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-900">Single Logo</h3>
+                    <div className="mt-4">
+                      <span className="text-4xl font-bold text-indigo-600">£5</span>
+                      <span className="text-gray-600">/logo</span>
+                    </div>
+                    <p className="mt-4 text-sm text-gray-600">Perfect for trying us out</p>
+                    <Link
+                      href="/signup"
+                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Small Pack */}
+                <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-900">Small Pack</h3>
+                    <div className="mt-4">
+                      <span className="text-4xl font-bold text-indigo-600">£10</span>
+                      <span className="text-gray-600">/10 logos</span>
+                    </div>
+                    <p className="mt-4 text-sm text-gray-600">50% savings</p>
+                    <Link
+                      href="/signup"
+                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                    >
+                      Buy Now
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Medium Pack */}
+                <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-900">Medium Pack</h3>
+                    <div className="mt-4">
+                      <span className="text-4xl font-bold text-indigo-600">£50</span>
+                      <span className="text-gray-600">/100 logos</span>
+                    </div>
+                    <p className="mt-4 text-sm text-gray-600">90% savings</p>
+                    <Link
+                      href="/signup"
+                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                    >
+                      Buy Now
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Large Pack */}
+                <div className="bg-white border-2 border-indigo-600 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 relative">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-indigo-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Best Value</span>
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-900">Large Pack</h3>
+                    <div className="mt-4">
+                      <span className="text-4xl font-bold text-indigo-600">£250</span>
+                      <span className="text-gray-600">/1000 logos</span>
+                    </div>
+                    <p className="mt-4 text-sm text-gray-600">95% savings - Just 25p per logo!</p>
+                    <Link
+                      href="/signup"
+                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                    >
+                      Buy Now
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-12 text-center">
+                <p className="text-sm text-gray-500">
+                  All prices include VAT. Credits never expire. Secure payment via Stripe.
+                </p>
               </div>
             </div>
           </div>
@@ -83,60 +197,114 @@ export default function HomePage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
                 <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                  Features
+                  Why Choose SimplyLogos?
                 </h2>
                 <p className="mt-4 text-lg text-gray-600">
-                  Everything you need for professional logos
+                  Everything you need for professional logos at unbeatable prices
                 </p>
               </div>
               
-              <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-12 h-12 mx-auto bg-indigo-100 rounded-lg">
-                    <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:rotate-12 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-lg font-semibold text-gray-900">Lightning Fast</h3>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Lightning Fast</h3>
                   <p className="mt-2 text-gray-600">
-                    Generate professional logos in seconds, not hours.
+                    Generate professional logos in seconds, not hours. Our AI-powered system delivers results instantly.
                   </p>
                 </div>
                 
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-12 h-12 mx-auto bg-indigo-100 rounded-lg">
-                    <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:rotate-12 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-lg font-semibold text-gray-900">High Quality</h3>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">High Quality</h3>
                   <p className="mt-2 text-gray-600">
-                    Professional-grade logos suitable for any business use.
+                    Professional-grade logos suitable for any business use. Print-ready PNG files with commercial licensing included.
                   </p>
                 </div>
                 
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-12 h-12 mx-auto bg-indigo-100 rounded-lg">
-                    <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:rotate-12 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-lg font-semibold text-gray-900">Affordable</h3>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Incredibly Affordable</h3>
                   <p className="mt-2 text-gray-600">
-                    Starting from just £5 per logo generation.
+                    Starting from just £5 per logo, or as low as <span className="font-semibold text-indigo-600">25p per logo</span> when buying in bulk. No subscriptions required.
                   </p>
                 </div>
                 
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-12 h-12 mx-auto bg-indigo-100 rounded-lg">
-                    <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:rotate-12 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-lg font-semibold text-gray-900">Easy to Use</h3>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Easy to Use</h3>
                   <p className="mt-2 text-gray-600">
-                    Simple interface that anyone can use to create amazing logos.
+                    Simple interface that anyone can use to create amazing logos. No design experience required.
                   </p>
+                </div>
+
+                <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:rotate-12 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Secure & Reliable</h3>
+                  <p className="mt-2 text-gray-600">
+                    Secure payment processing via Stripe. Your credits never expire and your data is always protected.
+                  </p>
+                </div>
+
+                <div className="text-center group hover:transform hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:rotate-12 transform">
+                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Unlimited Revisions</h3>
+                  <p className="mt-2 text-gray-600">
+                    Generate as many variations as you need. Each logo is unique and tailored to your specific requirements.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Video Section */}
+          <div className="py-20 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                  See SimplyLogos in Action
+                </h2>
+                <p className="mt-4 text-lg text-gray-600">
+                  Watch how easy it is to create professional logos in seconds
+                </p>
+              </div>
+              
+              <div className="mt-16">
+                <div className="relative bg-gray-200 rounded-lg overflow-hidden shadow-lg max-w-4xl mx-auto">
+                  <div className="aspect-video bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 bg-indigo-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer">
+                        <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-700 mb-2">Demo Video Coming Soon</h3>
+                      <p className="text-gray-600">Watch our platform in action</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -162,6 +330,9 @@ export default function HomePage() {
             </div>
           </div>
         </main>
+        
+        {/* Footer */}
+        <Footer />
       </div>
     )
   }
@@ -201,6 +372,9 @@ export default function HomePage() {
           <LogoGenerator />
         </div>
       </main>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
