@@ -10,11 +10,7 @@ interface HeroSectionProps {
 export default function HeroSection({ className = '' }: HeroSectionProps) {
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [isScrolling, setIsScrolling] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const animationRef = useRef<number | null>(null)
 
   // Complete array of logo filenames
   const logoFiles = [
@@ -89,92 +85,22 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Don't update state during custom scroll animations
-      if (isScrolling) return
-      
       const scrollTop = window.scrollY
-      
-      // Clear any existing timeout
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current)
-      }
-      
-      // Set transitioning state
-      setIsTransitioning(true)
-      
-      // Determine if scrolled based on a threshold
-      const shouldBeScrolled = scrollTop > 50
-      
-      if (shouldBeScrolled !== isScrolled) {
-        setIsScrolled(shouldBeScrolled)
-      }
-      
-      // Clear transitioning state after a delay
-      scrollTimeoutRef.current = setTimeout(() => {
-        setIsTransitioning(false)
-      }, 100)
+      setIsScrolled(scrollTop > 100)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current)
-      }
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
-    }
-  }, [isScrolled, isScrolling])
-
-  // Advanced easing function with momentum
-  const easeOutQuart = (t: number): number => {
-    return 1 - Math.pow(1 - t, 4)
-  }
-
-  const easeInOutQuart = (t: number): number => {
-    return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2
-  }
-
-  const smoothScrollTo = (targetY: number, duration: number = 1500) => {
-    if (isScrolling) return // Prevent multiple scrolls
-    
-    setIsScrolling(true)
-    const startY = window.pageYOffset
-    const distance = targetY - startY
-    const startTime = performance.now()
-
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      
-      // Use different easing for different directions
-      const easedProgress = distance > 0 ? easeOutQuart(progress) : easeInOutQuart(progress)
-      const currentY = startY + (distance * easedProgress)
-      
-      window.scrollTo(0, currentY)
-      
-      if (progress < 1) {
-        animationRef.current = requestAnimationFrame(animate)
-      } else {
-        setIsScrolling(false)
-        animationRef.current = null
-      }
-    }
-
-    animationRef.current = requestAnimationFrame(animate)
-  }
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const scrollToTop = () => {
-    smoothScrollTo(0, 1200)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const scrollToNextSection = () => {
     const nextSection = document.querySelector('main')
     if (nextSection) {
-      const targetPosition = nextSection.offsetTop
-      smoothScrollTo(targetPosition, 1800)
+      nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }
 
