@@ -10,7 +10,9 @@ interface HeroSectionProps {
 export default function HeroSection({ className = '' }: HeroSectionProps) {
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Complete array of logo filenames
   const logoFiles = [
@@ -86,12 +88,46 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
-      setIsScrolled(scrollTop > 100)
+      
+      // Clear any existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+      
+      // Set transitioning state
+      setIsTransitioning(true)
+      
+      // Determine if scrolled based on a threshold
+      const shouldBeScrolled = scrollTop > 50
+      
+      if (shouldBeScrolled !== isScrolled) {
+        setIsScrolled(shouldBeScrolled)
+      }
+      
+      // Clear transitioning state after a delay
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsTransitioning(false)
+      }, 100)
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+    }
+  }, [isScrolled])
+
+  const scrollToNextSection = () => {
+    const nextSection = document.querySelector('main')
+    if (nextSection) {
+      nextSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
 
   const currentLogo = logoFiles[currentLogoIndex]
 
@@ -153,9 +189,12 @@ export default function HeroSection({ className = '' }: HeroSectionProps) {
         {/* Scroll indicator - only show when not scrolled */}
         {!isScrolled && (
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
-            </div>
+            <button
+              onClick={scrollToNextSection}
+              className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center hover:border-indigo-600 transition-colors cursor-pointer"
+            >
+              <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse hover:bg-indigo-600 transition-colors"></div>
+            </button>
           </div>
         )}
       </div>
