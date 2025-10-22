@@ -12,10 +12,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 401 })
     }
 
+    // Debug: Log user info and check credits
+    console.log('🔍 GENERATE LOGO - User ID:', userId)
+    
+    // Get actual user data to debug
+    const { data: userData, error: userError } = await supabaseAdmin
+      .from('users')
+      .select('email, credits_balance, reroll_tokens')
+      .eq('id', userId)
+      .single()
+
+    console.log('🔍 GENERATE LOGO - User data:', userData, 'Error:', userError)
+
     // Check if user has enough credits
     const hasCredits = await check_user_credits(userId, 1)
+    console.log('🔍 GENERATE LOGO - Has credits check:', hasCredits)
+    
     if (!hasCredits) {
-      return NextResponse.json({ error: 'Insufficient credits' }, { status: 402 })
+      return NextResponse.json({ 
+        error: 'Insufficient credits',
+        debug: {
+          userId,
+          email: userData?.email,
+          currentCredits: userData?.credits_balance,
+          requiredCredits: 1
+        }
+      }, { status: 402 })
     }
 
     // Validate input
