@@ -8,13 +8,13 @@ console.log('🔍 ENV DEBUG - Gemini API Initialization:', {
   isServer: typeof window === 'undefined'
 })
 
-const geminiApiKey = process.env.GOOGLE_GEMINI_API_KEY
-
-if (!geminiApiKey) {
+if (!process.env.GOOGLE_GEMINI_API_KEY) {
   console.error('❌ GOOGLE_GEMINI_API_KEY is undefined!')
   console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('GEMINI') || key.includes('GOOGLE')))
   throw new Error('GOOGLE_GEMINI_API_KEY is not defined. Check Netlify environment variables.')
 }
+
+const geminiApiKey: string = process.env.GOOGLE_GEMINI_API_KEY
 
 console.log('✅ Gemini API environment variables loaded successfully')
 
