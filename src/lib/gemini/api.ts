@@ -40,17 +40,17 @@ export async function generateLogo(request: LogoGenerationRequest): Promise<Logo
 
     if (request.freeText) {
       // Use free text input
-      promptText = `Create a professional, modern logo: ${request.freeText}. Style: vector-style, clean, professional, suitable for business use, transparent background, high contrast, memorable, distinctive, modern typography if text is included, scalable design.`
+      promptText = `Create a professional, modern logo: ${request.freeText}. Style: vector-style, clean, professional, suitable for business use, white or transparent background, high contrast, memorable, distinctive, modern typography if text is included, scalable design.`
     } else {
       // Use structured input
-      promptText = `Create a professional, modern logo for "${request.businessName}", a ${request.industry} business. Include these elements: ${request.elements}. Style: vector-style, clean, professional, transparent background, high contrast, memorable, distinctive, modern typography, scalable design.`
+      promptText = `Create a professional, modern logo for "${request.businessName}", a ${request.industry} business. Include these elements: ${request.elements}. Style: vector-style, clean, professional, white or transparent background, high contrast, memorable, distinctive, modern typography, scalable design.`
     }
 
-    console.log('🎨 Generating logo with Imagen 4.0, prompt:', promptText)
+    console.log('🎨 Generating logo with Gemini 2.0 Flash, prompt:', promptText)
 
-    // Use Imagen 4.0 API with correct endpoint
+    // Use Gemini 2.0 Flash image generation API
     const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent',
       {
         method: 'POST',
         headers: {
@@ -58,15 +58,17 @@ export async function generateLogo(request: LogoGenerationRequest): Promise<Logo
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          instances: [
+          contents: [
             {
-              prompt: promptText,
+              parts: [
+                {
+                  text: promptText,
+                },
+              ],
             },
           ],
-          parameters: {
-            sampleCount: 1, // Generate 1 image
-            aspectRatio: '1:1', // Square logo
-            personGeneration: 'allow_adult', // Default setting
+          generationConfig: {
+            responseModalities: ['IMAGE'],
           },
         }),
       }
@@ -74,33 +76,30 @@ export async function generateLogo(request: LogoGenerationRequest): Promise<Logo
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('❌ Imagen API error:', response.status, errorText)
-      throw new Error(`Imagen API error: ${response.status} - ${errorText}`)
+      console.error('❌ Gemini 2.0 Flash API error:', response.status, errorText)
+      throw new Error(`Gemini API error: ${response.status} - ${errorText}`)
     }
 
     const data = await response.json()
-    console.log('✅ Imagen API response received')
+    console.log('✅ Gemini 2.0 Flash API response received')
 
     // Extract the generated image from the response
-    if (data.predictions && data.predictions.length > 0) {
-      const prediction = data.predictions[0]
+    if (data.candidates && data.candidates.length > 0) {
+      const candidate = data.candidates[0]
       
-      // The API returns base64 encoded image data
-      if (prediction.bytesBase64Encoded) {
-        const imageUrl = `data:image/png;base64,${prediction.bytesBase64Encoded}`
-        console.log('✅ Logo generated successfully')
-        
-        return {
-          success: true,
-          imageUrl: imageUrl,
-        }
-      } else if (prediction.mimeType && prediction.bytesBase64Encoded) {
-        const imageUrl = `data:${prediction.mimeType};base64,${prediction.bytesBase64Encoded}`
-        console.log('✅ Logo generated successfully')
-        
-        return {
-          success: true,
-          imageUrl: imageUrl,
+      if (candidate.content && candidate.content.parts) {
+        // Find the part with image data
+        for (const part of candidate.content.parts) {
+          if (part.inlineData && part.inlineData.data) {
+            const mimeType = part.inlineData.mimeType || 'image/png'
+            const imageUrl = `data:${mimeType};base64,${part.inlineData.data}`
+            console.log('✅ Logo generated successfully')
+            
+            return {
+              success: true,
+              imageUrl: imageUrl,
+            }
+          }
         }
       }
     }
