@@ -4,6 +4,14 @@ import { supabaseAdmin } from '@/lib/supabase/client'
 import { update_user_credits } from '@/lib/supabase/functions'
 
 export async function POST(request: NextRequest) {
+  // Debug logging for environment variables
+  console.log('🔍 ENV DEBUG - Stripe Webhook:', {
+    hasWebhookSecret: !!process.env.STRIPE_WEBHOOK_SECRET,
+    webhookSecretPreview: process.env.STRIPE_WEBHOOK_SECRET?.substring(0, 10) + '...',
+    nodeEnv: process.env.NODE_ENV,
+    isServer: typeof window === 'undefined'
+  })
+
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
 
@@ -14,10 +22,17 @@ export async function POST(request: NextRequest) {
   let event
 
   try {
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+    if (!webhookSecret) {
+      console.error('❌ STRIPE_WEBHOOK_SECRET is undefined!')
+      console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('STRIPE')))
+      throw new Error('STRIPE_WEBHOOK_SECRET is not defined. Check Netlify environment variables.')
+    }
+
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      webhookSecret
     )
   } catch (err) {
     console.error('Webhook signature verification failed:', err)

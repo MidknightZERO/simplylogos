@@ -17,6 +17,14 @@ function hashIp(ip: string, salt?: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    // Debug logging for environment variables
+    console.log('🔍 ENV DEBUG - Free Credit API:', {
+      hasIpSalt: !!process.env.IP_SALT,
+      ipSaltPreview: process.env.IP_SALT?.substring(0, 10) + '...',
+      nodeEnv: process.env.NODE_ENV,
+      isServer: typeof window === 'undefined'
+    })
+
     const ip = getClientIp(req)
     if (!ip) return NextResponse.json({ error: 'No IP' }, { status: 400 })
 
@@ -24,7 +32,11 @@ export async function POST(req: NextRequest) {
     if (!userId) return NextResponse.json({ error: 'Missing userId' }, { status: 400 })
 
     const ipSalt = process.env.IP_SALT
-    if (!ipSalt) return NextResponse.json({ error: 'IP_SALT missing' }, { status: 500 })
+    if (!ipSalt) {
+      console.error('❌ IP_SALT is undefined!')
+      console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('IP') || key.includes('SALT')))
+      return NextResponse.json({ error: 'IP_SALT missing' }, { status: 500 })
+    }
 
     const ipHash = hashIp(ip, ipSalt)
 

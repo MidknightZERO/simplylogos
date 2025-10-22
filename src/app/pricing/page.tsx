@@ -35,7 +35,19 @@ export default function PricingPage() {
       if (sessionId) {
         // Redirect to Stripe Checkout
         const { loadStripe } = await import('@stripe/stripe-js')
-        const stripeInstance = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+        // Debug logging for Stripe publishable key
+        console.log('🔍 ENV DEBUG - Stripe Publishable Key:', {
+          hasPublishableKey: !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+          keyPreview: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.substring(0, 20) + '...',
+          isClient: typeof window !== 'undefined'
+        })
+
+        if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+          console.error('❌ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is undefined!')
+          throw new Error('Stripe publishable key not configured')
+        }
+
+        const stripeInstance = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
         if (stripeInstance) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await (stripeInstance as any).redirectToCheckout({ sessionId })
@@ -71,7 +83,19 @@ export default function PricingPage() {
       if (sessionId) {
         // Redirect to Stripe Checkout
         const { loadStripe } = await import('@stripe/stripe-js')
-        const stripeInstance = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+        // Debug logging for Stripe publishable key
+        console.log('🔍 ENV DEBUG - Stripe Publishable Key:', {
+          hasPublishableKey: !!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+          keyPreview: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.substring(0, 20) + '...',
+          isClient: typeof window !== 'undefined'
+        })
+
+        if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+          console.error('❌ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is undefined!')
+          throw new Error('Stripe publishable key not configured')
+        }
+
+        const stripeInstance = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
         if (stripeInstance) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await (stripeInstance as any).redirectToCheckout({ sessionId })

@@ -45,6 +45,14 @@ export default function SignupPage() {
     try {
       console.log('Attempting signup with:', { email, passwordLength: password.length })
       
+      // Debug logging for site URL
+      console.log('🔍 ENV DEBUG - Site URL:', {
+        hasSiteUrl: !!process.env.NEXT_PUBLIC_SITE_URL,
+        siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+        windowOrigin: window.location.origin,
+        finalRedirectUrl: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/login`
+      })
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,

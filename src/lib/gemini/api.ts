@@ -1,6 +1,24 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY!)
+// Debug logging for environment variables
+console.log('🔍 ENV DEBUG - Gemini API Initialization:', {
+  hasApiKey: !!process.env.GOOGLE_GEMINI_API_KEY,
+  apiKeyPreview: process.env.GOOGLE_GEMINI_API_KEY?.substring(0, 20) + '...',
+  nodeEnv: process.env.NODE_ENV,
+  isServer: typeof window === 'undefined'
+})
+
+const geminiApiKey = process.env.GOOGLE_GEMINI_API_KEY
+
+if (!geminiApiKey) {
+  console.error('❌ GOOGLE_GEMINI_API_KEY is undefined!')
+  console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('GEMINI') || key.includes('GOOGLE')))
+  throw new Error('GOOGLE_GEMINI_API_KEY is not defined. Check Netlify environment variables.')
+}
+
+console.log('✅ Gemini API environment variables loaded successfully')
+
+const genAI = new GoogleGenerativeAI(geminiApiKey)
 
 export interface LogoGenerationRequest {
   businessName: string
