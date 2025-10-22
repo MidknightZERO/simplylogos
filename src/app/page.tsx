@@ -25,7 +25,7 @@ export default function HomePage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         {/* Sticky Header */}
         <StickyHeader isVisible={isScrolled} />
         
@@ -38,59 +38,61 @@ export default function HomePage() {
         {/* Main Content */}
         <main className="relative z-10">
           {/* How It Works Section */}
-          <div className="py-20 bg-[#e7e7e7]">
+          <div className="py-24 bg-gradient-to-br from-white/80 to-slate-50/80 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
-                <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                <h2 className="text-4xl font-extrabold text-slate-900 sm:text-5xl">
                   How It Works
                 </h2>
-                <p className="mt-4 text-lg text-gray-600">
+                <p className="mt-4 text-xl text-slate-600">
                   Create professional logos in three simple steps
                 </p>
               </div>
               
-              <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-3">
+              <div className="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-3">
                 <div className="text-center group">
-                  <div className="flex items-center justify-center w-20 h-20 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:scale-110 transform">
-                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center justify-center w-24 h-24 mx-auto bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl shadow-lg group-hover:shadow-2xl group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300">
+                    <svg className="w-12 h-12 text-white group-hover:rotate-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Text</h3>
-                  <p className="mt-2 text-gray-600">
+                  <h3 className="mt-8 text-2xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">Text</h3>
+                  <p className="mt-4 text-slate-600 leading-relaxed">
                     Enter the text you want on your logo. Your business name, tagline, or any text that represents your brand.
                   </p>
                 </div>
                 
                 <div className="text-center group">
-                  <div className="flex items-center justify-center w-20 h-20 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:scale-110 transform">
-                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center justify-center w-24 h-24 mx-auto bg-gradient-to-br from-blue-500 to-cyan-600 rounded-3xl shadow-lg group-hover:shadow-2xl group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300">
+                    <svg className="w-12 h-12 text-white group-hover:rotate-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Elements</h3>
-                  <p className="mt-2 text-gray-600">
+                  <h3 className="mt-8 text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Elements</h3>
+                  <p className="mt-4 text-slate-600 leading-relaxed">
                     Describe the elements you&apos;d like in your logo. Colors, shapes, icons, or any specific design elements that represent your business.
                   </p>
                 </div>
                 
                 <div className="text-center group">
-                  <div className="flex items-center justify-center w-20 h-20 mx-auto bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors duration-300 group-hover:scale-110 transform">
-                    <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center justify-center w-24 h-24 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl shadow-lg group-hover:shadow-2xl group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300">
+                    <svg className="w-12 h-12 text-white group-hover:rotate-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Generate</h3>
-                  <p className="mt-2 text-gray-600">
+                  <h3 className="mt-8 text-2xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">Generate</h3>
+                  <p className="mt-4 text-slate-600 leading-relaxed">
                     Wait a few seconds and get your new business logo in PNG format. High-quality, professional design ready for immediate use.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-12 text-center">
-                <p className="text-sm text-gray-500">
-                  <span className="font-semibold">1 credit per logo</span> • Instant download • Commercial use included
-                </p>
+              <div className="mt-16 text-center">
+                <div className="glass inline-block rounded-2xl px-8 py-4 shadow-md">
+                  <p className="text-sm text-slate-700 font-medium">
+                    <span className="font-bold text-indigo-600">1 credit per logo</span> • Instant download • Commercial use included
+                  </p>
+                </div>
               </div>
             </div>
           </div>
