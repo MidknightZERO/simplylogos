@@ -63,6 +63,12 @@ export default function DashboardPage() {
   useEffect(() => {
     if (user) {
       fetchUserData()
+      // Attempt one-time free credit grant (safe if already granted or IP used)
+      fetch('/api/free-credit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id }),
+      }).catch(() => {})
     }
   }, [user, fetchUserData])
 

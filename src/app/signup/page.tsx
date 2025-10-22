@@ -22,6 +22,14 @@ export default function SignupPage() {
     setLoading(true)
     setError('')
 
+    // Disallow '+' in local-part to prevent aliasing abuses
+    const emailLocal = email.split('@')[0]
+    if (emailLocal.includes('+')) {
+      setError('Email aliases with + are not allowed. Please use a standard email address.')
+      setLoading(false)
+      return
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       setLoading(false)
@@ -41,7 +49,7 @@ export default function SignupPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/login`,
         },
       })
 
@@ -54,19 +62,10 @@ export default function SignupPage() {
         return
       }
 
-      // Check if signup was successful
+      // Always send user to confirmation page; actual access granted post verification
       if (data.user) {
         console.log('User created successfully:', data.user)
-        // Check if email confirmation is required
-        if (data.user.email_confirmed_at === null) {
-          console.log('Email confirmation required, redirecting to confirmation page')
-          // Email confirmation required - redirect to confirmation page
-          window.location.href = '/signup-confirmation'
-        } else {
-          console.log('User already confirmed, redirecting to dashboard')
-          // User is already confirmed - redirect to dashboard
-          window.location.href = '/dashboard'
-        }
+        window.location.href = '/signup-confirmation'
       } else {
         console.error('No user data returned from Supabase')
         setError('Failed to create account. Please try again.')
