@@ -79,8 +79,33 @@ export async function testSupabaseConnection() {
   }
 }
 
-// Server-side client with service role key
-export const supabaseAdmin = createClient(
-  supabaseUrl,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-)
+// Server-side client with service role key (lazy creation)
+let _supabaseAdmin: SupabaseClient | null = null
+
+function getSupabaseAdminClient(): SupabaseClient {
+  if (!_supabaseAdmin) {
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    
+    console.log('🔧 CREATING SUPABASE ADMIN CLIENT:', {
+      hasServiceRoleKey: !!serviceRoleKey,
+      keyLength: serviceRoleKey?.length || 0,
+      isServer: typeof window === 'undefined'
+    })
+    
+    if (!serviceRoleKey) {
+      console.error('❌ SUPABASE_SERVICE_ROLE_KEY is undefined!')
+      throw new Error('SUPABASE_SERVICE_ROLE_KEY is not defined. Check Netlify environment variables.')
+    }
+    
+    try {
+      _supabaseAdmin = createClient(supabaseUrl, serviceRoleKey)
+      console.log('✅ Supabase admin client created successfully')
+    } catch (error) {
+      console.error('❌ Failed to create Supabase admin client:', error)
+      throw error
+    }
+  }
+  return _supabaseAdmin
+}
+
+export const supabaseAdmin = getSupabaseAdminClient()
