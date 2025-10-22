@@ -68,7 +68,7 @@ export async function generateLogo(request: LogoGenerationRequest): Promise<Logo
             },
           ],
           generationConfig: {
-            responseModalities: ['IMAGE'],
+            responseModalities: ['IMAGE', 'TEXT'],
           },
         }),
       }
