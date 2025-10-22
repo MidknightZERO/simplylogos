@@ -11,9 +11,15 @@ console.log('🔍 ENV DEBUG - Supabase Client Initialization:', {
   isClient: typeof window !== 'undefined'
 })
 
-// Use environment variables for security
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+// TEMPORARY FIX: Hardcode values to test if env var injection is the issue
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://pwtihvcjbvenexmbymkv.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3dGlodmNqYnZlbmV4bWJ5bWt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNjc1MzYsImV4cCI6MjA3NjY0MzUzNn0.eJYFMX35J0l1H5_YMTv0yzp3GuQX1QS1YTYDYemDsTk'
+
+console.log('🔧 USING VALUES:', {
+  url: supabaseUrl,
+  key: supabaseAnonKey.substring(0, 20) + '...',
+  isHardcoded: !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+})
 
 if (!supabaseUrl) {
   console.error('❌ NEXT_PUBLIC_SUPABASE_URL is undefined!')
