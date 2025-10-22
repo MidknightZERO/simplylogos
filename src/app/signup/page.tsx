@@ -41,9 +41,8 @@ export default function SignupPage() {
       if (error) {
         setError(error.message)
       } else {
-        // Show success message
-        setError('')
-        alert('Check your email for a confirmation link!')
+        // Redirect to confirmation page
+        window.location.href = '/signup-confirmation'
       }
     } catch {
       setError('An unexpected error occurred')
