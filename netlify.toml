@@ -6,3 +6,5 @@
   NODE_VERSION = "20"
   # Configure secrets scanning to ignore expected public variables
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,NEXT_PUBLIC_SITE_URL"
+  # Ignore documentation files that contain placeholder values
+  SECRETS_SCAN_OMIT_PATHS = "README.md,FINAL_SETUP.md,setup.sh,setup.bat"
