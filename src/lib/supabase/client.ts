@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 // Debug logging for environment variables
 console.log('🔍 ENV DEBUG - Supabase Client Initialization:', {
@@ -36,9 +36,9 @@ if (!supabaseAnonKey) {
 console.log('✅ Supabase environment variables loaded successfully')
 
 // Create client lazily to avoid multiple instances
-let _supabase: any = null
+let _supabase: SupabaseClient | null = null
 
-function getSupabaseClient() {
+function getSupabaseClient(): SupabaseClient {
   if (!_supabase) {
     console.log('🔧 CREATING SUPABASE CLIENT:', {
       url: supabaseUrl,
