@@ -8,8 +8,8 @@ import StickyHeader from '@/components/StickyHeader'
 import ScrollToTopButton from '@/components/ScrollToTopButton'
 import Footer from '@/components/Footer'
 import LogoRotation from '@/components/LogoRotation'
+import UserMenu from '@/components/UserMenu'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase/client'
 
 export default function HomePage() {
   const { user, loading } = useUser()
@@ -340,28 +340,16 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header with Logo Rotation */}
-      <header className="bg-[#e7e7e7] shadow">
+      <header className="bg-[#e7e7e7] shadow sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
-              <LogoRotation />
+              <Link href="/">
+                <LogoRotation />
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <Link
-                href="/dashboard"
-                className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Dashboard
-              </Link>
-              <button
-                onClick={async () => {
-                  await supabase.auth.signOut()
-                  window.location.href = '/'
-                }}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Logout
-              </button>
+              <UserMenu />
             </div>
           </div>
         </div>

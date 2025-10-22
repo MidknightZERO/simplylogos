@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useUser } from '@/hooks/useUser'
 import { supabase } from '@/lib/supabase/client'
 import LogoRotation from '@/components/LogoRotation'
+import UserMenu from '@/components/UserMenu'
 import Link from 'next/link'
 
 interface Generation {
@@ -160,31 +161,16 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#e7e7e7]">
       {/* Header */}
-      <header className="bg-[#e7e7e7] shadow">
+      <header className="bg-[#e7e7e7] shadow sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
-              <LogoRotation />
+              <Link href="/">
+                <LogoRotation />
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <Link
-                href="/"
-                className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Generate Logo
-              </Link>
-              <Link
-                href="/pricing"
-                className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Pricing
-              </Link>
-              <button
-                onClick={() => supabase.auth.signOut()}
-                className="bg-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
-              >
-                Sign Out
-              </button>
+              <UserMenu />
             </div>
           </div>
         </div>
