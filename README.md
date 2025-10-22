@@ -2,6 +2,8 @@
 
 A modern, zero-cost AI logo generation platform built with Next.js, Supabase, Stripe, and Google Gemini API.
 
+<!-- Trigger deployment -->
+
 ## Features
 
 - 🤖 **AI-Powered Logo Generation** - Generate professional logos using Google Gemini API
