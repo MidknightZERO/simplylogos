@@ -12,10 +12,14 @@ interface Generation {
   image_url: string | null
   status: string
   created_at: string
+  is_reroll: boolean
+  parent_generation_id: string | null
+  reroll_count: number
 }
 
 interface UserData {
   credits_balance: number
+  reroll_tokens: number
   email: string
 }
 
@@ -30,7 +34,7 @@ export default function DashboardPage() {
       // Fetch user data
       const { data: userData, error: userError } = await supabase
         .from('users')
-        .select('credits_balance, email')
+        .select('credits_balance, reroll_tokens, email')
         .eq('id', user?.id)
         .single()
 
@@ -68,7 +72,16 @@ export default function DashboardPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id }),
-      }).catch(() => {})
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log('Free credit response:', data)
+          if (data.granted) {
+            // Refetch user data to get updated balance
+            fetchUserData()
+          }
+        })
+        .catch(err => console.error('Free credit error:', err))
     }
   }, [user, fetchUserData])
 
@@ -146,7 +159,7 @@ export default function DashboardPage() {
               <h2 className="text-lg font-medium text-gray-900 mb-4">
                 Welcome back, {userData?.email}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-indigo-50 p-4 rounded-lg">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
@@ -158,6 +171,22 @@ export default function DashboardPage() {
                       <p className="text-sm font-medium text-indigo-600">Credits Balance</p>
                       <p className="text-2xl font-semibold text-indigo-900">
                         {userData?.credits_balance || 0}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <svg className="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-purple-600">Reroll Tokens</p>
+                      <p className="text-2xl font-semibold text-purple-900">
+                        {userData?.reroll_tokens || 0}
                       </p>
                     </div>
                   </div>
@@ -187,7 +216,7 @@ export default function DashboardPage() {
                       </svg>
                     </div>
                     <div className="ml-4">
-                      <p className="text-sm font-medium text-yellow-600">Recent Activity</p>
+                      <p className="text-sm font-medium text-yellow-600">Completed</p>
                       <p className="text-2xl font-semibold text-yellow-900">
                         {generations.filter(g => g.status === 'completed').length}
                       </p>
