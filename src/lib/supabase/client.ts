@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Use environment variables for security
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://pwtihvcjbvenexmbymkv.supabase.co'
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3dGlodmNqYnZlbmV4bWJ5bWt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNjc1MzYsImV4cCI6MjA3NjY0MzUzNn0.eJYFMX35J0l1H5_YMTv0yzp3GuQX1QS1YTYDYemDsTk'
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
@@ -27,5 +27,5 @@ export async function testSupabaseConnection() {
 // Server-side client with service role key
 export const supabaseAdmin = createClient(
   supabaseUrl,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key'
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
