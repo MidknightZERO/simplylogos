@@ -74,3 +74,63 @@ export async function get_user_generations(userId: string, limit: number = 10) {
 
   return data || []
 }
+
+// Reroll token management functions
+export async function check_reroll_tokens(userId: string, requiredTokens: number): Promise<boolean> {
+  const { data, error } = await supabaseAdmin
+    .from('users')
+    .select('reroll_tokens')
+    .eq('id', userId)
+    .single()
+
+  if (error) {
+    console.error('Error checking reroll tokens:', error)
+    return false
+  }
+
+  return (data?.reroll_tokens || 0) >= requiredTokens
+}
+
+export async function update_reroll_tokens(userId: string, tokenChange: number): Promise<void> {
+  // First get current tokens
+  const { data: user, error: fetchError } = await supabaseAdmin
+    .from('users')
+    .select('reroll_tokens')
+    .eq('id', userId)
+    .single()
+
+  if (fetchError) {
+    console.error('Error fetching reroll tokens:', fetchError)
+    throw new Error('Failed to fetch reroll tokens')
+  }
+
+  const newBalance = Math.max(0, (user?.reroll_tokens || 0) + tokenChange)
+
+  const { error } = await supabaseAdmin
+    .from('users')
+    .update({
+      reroll_tokens: newBalance,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', userId)
+
+  if (error) {
+    console.error('Error updating reroll tokens:', error)
+    throw new Error('Failed to update reroll tokens')
+  }
+}
+
+export async function get_reroll_tokens(userId: string): Promise<number> {
+  const { data, error } = await supabaseAdmin
+    .from('users')
+    .select('reroll_tokens')
+    .eq('id', userId)
+    .single()
+
+  if (error) {
+    console.error('Error getting reroll tokens:', error)
+    return 0
+  }
+
+  return data?.reroll_tokens || 0
+}

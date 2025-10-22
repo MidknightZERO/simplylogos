@@ -7,10 +7,16 @@ ALTER DATABASE postgres SET "app.jwt_secret" TO 'your-jwt-secret';
 CREATE TABLE public.users (
   id UUID REFERENCES auth.users(id) PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
-  credits_balance INTEGER DEFAULT 0,
+  credits_balance INTEGER DEFAULT 1, -- New users start with 1 free credit
+  reroll_tokens INTEGER DEFAULT 4, -- New users start with 4 reroll tokens
+  free_credit_granted BOOLEAN DEFAULT FALSE,
+  signup_ip_hash TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Index for faster IP hash lookups
+CREATE INDEX IF NOT EXISTS idx_users_signup_ip_hash ON public.users (signup_ip_hash);
 
 -- Transactions table
 CREATE TABLE public.transactions (
@@ -32,9 +38,15 @@ CREATE TABLE public.generations (
   prompt TEXT NOT NULL,
   image_url TEXT,
   credits_used INTEGER DEFAULT 1,
+  is_reroll BOOLEAN DEFAULT FALSE, -- TRUE if this is a reroll of an existing logo
+  parent_generation_id UUID REFERENCES public.generations(id) ON DELETE SET NULL, -- Link to original generation if this is a reroll
+  reroll_count INTEGER DEFAULT 0, -- Number of times this generation has been rerolled
   status TEXT DEFAULT 'generating' CHECK (status IN ('generating', 'completed', 'failed')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Index for faster parent generation lookups
+CREATE INDEX IF NOT EXISTS idx_generations_parent_id ON public.generations (parent_generation_id);
 
 -- Subscriptions table
 CREATE TABLE public.subscriptions (
@@ -118,5 +130,36 @@ BEGIN
   WHERE id = user_uuid;
   
   RETURN COALESCE(current_credits, 0) >= required_credits;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to update reroll tokens
+CREATE OR REPLACE FUNCTION public.update_reroll_tokens(
+  user_uuid UUID,
+  token_change INTEGER
+)
+RETURNS VOID AS $$
+BEGIN
+  UPDATE public.users
+  SET reroll_tokens = GREATEST(0, reroll_tokens + token_change),
+      updated_at = NOW()
+  WHERE id = user_uuid;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to check if user has enough reroll tokens
+CREATE OR REPLACE FUNCTION public.check_reroll_tokens(
+  user_uuid UUID,
+  required_tokens INTEGER
+)
+RETURNS BOOLEAN AS $$
+DECLARE
+  current_tokens INTEGER;
+BEGIN
+  SELECT reroll_tokens INTO current_tokens
+  FROM public.users
+  WHERE id = user_uuid;
+  
+  RETURN COALESCE(current_tokens, 0) >= required_tokens;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;

@@ -17,67 +17,85 @@ function hashIp(ip: string, salt?: string): string {
 
 export async function POST(req: NextRequest) {
   try {
-    // Debug logging for environment variables
-    console.log('🔍 ENV DEBUG - Free Credit API:', {
-      hasIpSalt: !!process.env.IP_SALT,
-      ipSaltPreview: process.env.IP_SALT?.substring(0, 10) + '...',
-      nodeEnv: process.env.NODE_ENV,
-      isServer: typeof window === 'undefined'
-    })
-
-    const ip = getClientIp(req)
-    if (!ip) return NextResponse.json({ error: 'No IP' }, { status: 400 })
+    console.log('🔍 Free Credit API - Processing request')
 
     const { userId } = await req.json()
     if (!userId) return NextResponse.json({ error: 'Missing userId' }, { status: 400 })
 
+    const ip = getClientIp(req)
     const ipSalt = process.env.IP_SALT
-    if (!ipSalt) {
-      console.error('❌ IP_SALT is undefined!')
-      console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('IP') || key.includes('SALT')))
-      return NextResponse.json({ error: 'IP_SALT missing' }, { status: 500 })
-    }
 
-    const ipHash = hashIp(ip, ipSalt)
-
-    // Check if IP hash already used by any user
-    const { data: existing, error: existingErr } = await supabaseAdmin
-      .from('users')
-      .select('id')
-      .eq('signup_ip_hash', ipHash)
-      .limit(1)
-
-    if (existingErr) return NextResponse.json({ error: existingErr.message }, { status: 500 })
-    if (existing && existing.length > 0 && existing[0].id !== userId) {
-      return NextResponse.json({ granted: false, reason: 'ip_used' }, { status: 403 })
-    }
-
-    // Fetch current user to see if already granted
+    // Fetch current user
     const { data: me, error: meErr } = await supabaseAdmin
       .from('users')
-      .select('id, free_credit_granted')
+      .select('id, free_credit_granted, signup_ip_hash, credits_balance, reroll_tokens')
       .eq('id', userId)
       .single()
 
-    if (meErr) return NextResponse.json({ error: meErr.message }, { status: 500 })
+    if (meErr) {
+      console.error('Error fetching user:', meErr)
+      return NextResponse.json({ error: meErr.message }, { status: 500 })
+    }
     if (!me) return NextResponse.json({ error: 'User not found' }, { status: 404 })
-    if (me.free_credit_granted) return NextResponse.json({ granted: false, reason: 'already_granted' }, { status: 200 })
 
-    // Grant 1 credit and store hash
-    const { error: upErr } = await supabaseAdmin
-      .from('users')
-      .update({ signup_ip_hash: ipHash, free_credit_granted: true })
-      .eq('id', userId)
+    console.log('User data:', {
+      userId,
+      free_credit_granted: me.free_credit_granted,
+      credits_balance: me.credits_balance,
+      reroll_tokens: me.reroll_tokens
+    })
 
-    if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
+    // If already granted, return early
+    if (me.free_credit_granted) {
+      return NextResponse.json({ granted: false, reason: 'already_granted' }, { status: 200 })
+    }
 
-    // Increment credits by 1 via function to avoid race conditions
-    const { error: creditErr } = await supabaseAdmin.rpc('update_user_credits', { user_uuid: userId, credit_change: 1 })
-    if (creditErr) return NextResponse.json({ error: creditErr.message }, { status: 500 })
+    // Check IP hash if available
+    if (ip && ipSalt) {
+      const ipHash = hashIp(ip, ipSalt)
+      
+      // Check if IP hash already used by any other user
+      const { data: existing, error: existingErr } = await supabaseAdmin
+        .from('users')
+        .select('id, free_credit_granted')
+        .eq('signup_ip_hash', ipHash)
+        .limit(1)
 
+      if (existingErr) {
+        console.error('Error checking IP hash:', existingErr)
+      } else if (existing && existing.length > 0 && existing[0].id !== userId && existing[0].free_credit_granted) {
+        console.log('IP already used for free credit by another user')
+        return NextResponse.json({ granted: false, reason: 'ip_used' }, { status: 403 })
+      }
+
+      // Update with IP hash
+      const { error: upErr } = await supabaseAdmin
+        .from('users')
+        .update({ signup_ip_hash: ipHash, free_credit_granted: true })
+        .eq('id', userId)
+
+      if (upErr) {
+        console.error('Error updating user with IP hash:', upErr)
+        return NextResponse.json({ error: upErr.message }, { status: 500 })
+      }
+    } else {
+      // No IP tracking, just mark as granted
+      const { error: upErr } = await supabaseAdmin
+        .from('users')
+        .update({ free_credit_granted: true })
+        .eq('id', userId)
+
+      if (upErr) {
+        console.error('Error marking free credit as granted:', upErr)
+        return NextResponse.json({ error: upErr.message }, { status: 500 })
+      }
+    }
+
+    console.log('✅ Free credit marked as granted for user:', userId)
     return NextResponse.json({ granted: true })
   } catch (e: unknown) {
     const errorMessage = e instanceof Error ? e.message : 'Unknown error'
+    console.error('Free credit API error:', errorMessage)
     return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
