@@ -16,6 +16,7 @@ export default function Footer() {
           <div className="flex items-center space-x-2">
             <span className="text-gray-400 text-sm">Powered by</span>
             <div className="flex items-center space-x-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/SaaSquatch.png"
                 alt="SaaSquatch"

@@ -8,7 +8,7 @@ function getClientIp(req: NextRequest): string | null {
   const xri = req.headers.get('x-real-ip')
   if (xri) return xri
   // @ts-expect-error not typed on Next
-  return (req as any).ip || null
+  return (req as { ip?: string }).ip || null
 }
 
 function hashIp(ip: string, salt?: string): string {
@@ -65,8 +65,9 @@ export async function POST(req: NextRequest) {
     if (creditErr) return NextResponse.json({ error: creditErr.message }, { status: 500 })
 
     return NextResponse.json({ granted: true })
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Unknown error' }, { status: 500 })
+  } catch (e: unknown) {
+    const errorMessage = e instanceof Error ? e.message : 'Unknown error'
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
 

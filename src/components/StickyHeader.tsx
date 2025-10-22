@@ -31,11 +31,7 @@ export default function StickyHeader({ isVisible }: StickyHeaderProps) {
         clearInterval(intervalRef.current)
       }
     }
-  }, [])
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  }, [logoFiles.length])
 
   const currentLogo = logoFiles[currentLogoIndex]
 

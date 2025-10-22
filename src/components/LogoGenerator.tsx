@@ -228,6 +228,7 @@ export default function LogoGenerator({ onGenerationComplete }: LogoGeneratorPro
             <div className="text-center">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Your Generated Logo</h3>
               <div className="bg-gray-50 rounded-lg p-4 inline-block">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={generatedImage}
                   alt="Generated logo"

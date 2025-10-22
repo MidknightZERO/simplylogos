@@ -240,6 +240,7 @@ export default function DashboardPage() {
                     <div key={generation.id} className="border border-gray-200 rounded-lg p-4">
                       <div className="aspect-w-16 aspect-h-9 mb-4">
                         {generation.image_url ? (
+                          // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={generation.image_url}
                             alt="Generated logo"

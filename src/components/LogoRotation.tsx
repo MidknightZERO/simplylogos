@@ -30,7 +30,7 @@ export default function LogoRotation({ className = '' }: LogoRotationProps) {
         clearInterval(intervalRef.current)
       }
     }
-  }, [])
+  }, [logoFiles.length])
 
   const currentLogo = logoFiles[currentLogoIndex]
 

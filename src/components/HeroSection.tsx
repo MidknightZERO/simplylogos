@@ -33,7 +33,7 @@ export default function HeroSection({ className = '', onScrollStateChange }: Her
         clearInterval(intervalRef.current)
       }
     }
-  }, [])
+  }, [logoFiles.length])
 
   useEffect(() => {
     const heroElement = document.querySelector('[data-hero-section]')
@@ -50,10 +50,6 @@ export default function HeroSection({ className = '', onScrollStateChange }: Her
     if (heroElement) observer.observe(heroElement)
     return () => observer.disconnect()
   }, [onScrollStateChange])
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
 
   const scrollToNextSection = () => {
     const main = document.querySelector('main')
