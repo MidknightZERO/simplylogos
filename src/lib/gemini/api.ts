@@ -39,60 +39,81 @@ export async function generateLogo(request: LogoGenerationRequest): Promise<Logo
     let promptText: string
 
     if (request.freeText) {
-      promptText = request.freeText
+      // Use free text input
+      promptText = `Create a professional, modern logo: ${request.freeText}. Style: vector-style, clean, professional, suitable for business use, transparent background, high contrast, memorable, distinctive, modern typography if text is included, scalable design.`
     } else {
-      promptText = `Business Name: ${request.businessName}, Industry: ${request.industry}, Elements: ${request.elements}`
+      // Use structured input
+      promptText = `Create a professional, modern logo for "${request.businessName}", a ${request.industry} business. Include these elements: ${request.elements}. Style: vector-style, clean, professional, transparent background, high contrast, memorable, distinctive, modern typography, scalable design.`
     }
 
-    console.log('🎨 Generating logo with prompt:', promptText)
+    console.log('🎨 Generating logo with Imagen 4.0, prompt:', promptText)
 
-    // TEMPORARY: For now, return a placeholder response
-    // TODO: Implement actual Imagen 3 API integration when Vertex AI is set up
-    // Imagen 3 requires Google Cloud Vertex AI, not the standard Gemini API
-    
-    // Generate a placeholder logo URL (you can replace this with actual API integration)
-    // For testing, we'll create a data URL with the prompt embedded
-    const canvas = await createPlaceholderLogo(promptText)
-    
-    return {
-      success: true,
-      imageUrl: canvas,
+    // Use Imagen 4.0 API with correct endpoint
+    const response = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict',
+      {
+        method: 'POST',
+        headers: {
+          'x-goog-api-key': geminiApiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          instances: [
+            {
+              prompt: promptText,
+            },
+          ],
+          parameters: {
+            sampleCount: 1, // Generate 1 image
+            aspectRatio: '1:1', // Square logo
+            personGeneration: 'allow_adult', // Default setting
+          },
+        }),
+      }
+    )
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('❌ Imagen API error:', response.status, errorText)
+      throw new Error(`Imagen API error: ${response.status} - ${errorText}`)
     }
+
+    const data = await response.json()
+    console.log('✅ Imagen API response received')
+
+    // Extract the generated image from the response
+    if (data.predictions && data.predictions.length > 0) {
+      const prediction = data.predictions[0]
+      
+      // The API returns base64 encoded image data
+      if (prediction.bytesBase64Encoded) {
+        const imageUrl = `data:image/png;base64,${prediction.bytesBase64Encoded}`
+        console.log('✅ Logo generated successfully')
+        
+        return {
+          success: true,
+          imageUrl: imageUrl,
+        }
+      } else if (prediction.mimeType && prediction.bytesBase64Encoded) {
+        const imageUrl = `data:${prediction.mimeType};base64,${prediction.bytesBase64Encoded}`
+        console.log('✅ Logo generated successfully')
+        
+        return {
+          success: true,
+          imageUrl: imageUrl,
+        }
+      }
+    }
+
+    console.error('❌ No image data in response:', JSON.stringify(data))
+    throw new Error('No image generated in response')
   } catch (error) {
-    console.error('Error generating logo:', error)
+    console.error('❌ Error generating logo:', error)
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error occurred',
     }
   }
-}
-
-async function createPlaceholderLogo(prompt: string): Promise<string> {
-  // Create an SVG placeholder logo with the business details
-  const svg = `
-    <svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:rgb(99,102,241);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:rgb(139,92,246);stop-opacity:1" />
-        </linearGradient>
-      </defs>
-      <rect width="512" height="512" fill="url(#grad1)"/>
-      <text x="256" y="256" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">
-        ${prompt.substring(0, 30)}
-      </text>
-      <text x="256" y="300" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle" opacity="0.8">
-        Logo Generation
-      </text>
-      <text x="256" y="330" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.6">
-        Placeholder - Awaiting Imagen API
-      </text>
-    </svg>
-  `
-  
-  // Convert SVG to base64 data URL
-  const base64 = Buffer.from(svg).toString('base64')
-  return `data:image/svg+xml;base64,${base64}`
 }
 
 export function formatPrompt(request: LogoGenerationRequest): string {
