@@ -79,10 +79,15 @@ export async function testSupabaseConnection() {
   }
 }
 
-// Server-side client with service role key (lazy creation)
+// Server-side client with service role key (only create on server-side)
 let _supabaseAdmin: SupabaseClient | null = null
 
 function getSupabaseAdminClient(): SupabaseClient {
+  // Only create admin client on server-side
+  if (typeof window !== 'undefined') {
+    throw new Error('supabaseAdmin should only be used on the server-side')
+  }
+  
   if (!_supabaseAdmin) {
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
     
@@ -108,4 +113,5 @@ function getSupabaseAdminClient(): SupabaseClient {
   return _supabaseAdmin
 }
 
-export const supabaseAdmin = getSupabaseAdminClient()
+// Only export admin client if we're on server-side
+export const supabaseAdmin = typeof window === 'undefined' ? getSupabaseAdminClient() : null as any
