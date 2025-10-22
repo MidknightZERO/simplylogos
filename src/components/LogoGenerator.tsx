@@ -97,30 +97,31 @@ export default function LogoGenerator({ onGenerationComplete }: LogoGeneratorPro
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+      <div className="glass-strong rounded-3xl shadow-xl p-8 md:p-12">
+        <h1 className="text-4xl font-bold text-slate-900 mb-4 text-center">
           Generate Your Perfect Logo
         </h1>
+        <p className="text-slate-600 text-center mb-8">Create stunning, professional logos in seconds with AI</p>
 
         {/* Mode Toggle */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-gray-100 rounded-lg p-1">
+        <div className="flex justify-center mb-10">
+          <div className="glass rounded-2xl p-1.5 shadow-md">
             <button
               onClick={() => setMode('guided')}
-              className={`px-6 py-2 rounded-md font-medium transition-colors ${
+              className={`px-8 py-3 rounded-xl font-medium transition-all duration-200 ${
                 mode === 'guided'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg scale-105'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
               Guided Mode
             </button>
             <button
               onClick={() => setMode('free')}
-              className={`px-6 py-2 rounded-md font-medium transition-colors ${
+              className={`px-8 py-3 rounded-xl font-medium transition-all duration-200 ${
                 mode === 'free'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg scale-105'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
               Free Text Mode
@@ -133,7 +134,7 @@ export default function LogoGenerator({ onGenerationComplete }: LogoGeneratorPro
           {mode === 'guided' ? (
             <>
               <div>
-                <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="businessName" className="block text-sm font-semibold text-slate-700 mb-3">
                   Business Name *
                 </label>
                 <input
@@ -141,13 +142,13 @@ export default function LogoGenerator({ onGenerationComplete }: LogoGeneratorPro
                   id="businessName"
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/90 border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 font-medium"
                   placeholder="e.g., TechCorp Solutions"
                 />
               </div>
 
               <div>
-                <label htmlFor="industry" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="industry" className="block text-sm font-semibold text-slate-700 mb-3">
                   Industry/Business Type *
                 </label>
                 <input
@@ -155,39 +156,39 @@ export default function LogoGenerator({ onGenerationComplete }: LogoGeneratorPro
                   id="industry"
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/90 border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 font-medium"
                   placeholder="e.g., Technology, Healthcare, Restaurant"
                 />
               </div>
 
               <div>
-                <label htmlFor="elements" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="elements" className="block text-sm font-semibold text-slate-700 mb-3">
                   Desired Elements *
                 </label>
                 <textarea
                   id="elements"
                   value={elements}
                   onChange={(e) => setElements(e.target.value)}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  rows={4}
+                  className="w-full px-4 py-3 bg-white/90 border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 font-medium resize-none"
                   placeholder="e.g., Mountain icon, blue color scheme, modern typography"
                 />
               </div>
             </>
           ) : (
             <div>
-              <label htmlFor="freeText" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="freeText" className="block text-sm font-semibold text-slate-700 mb-3">
                 Describe Your Logo *
               </label>
               <textarea
                 id="freeText"
                 value={freeText}
                 onChange={(e) => setFreeText(e.target.value)}
-                rows={6}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                rows={7}
+                className="w-full px-4 py-3 bg-white/90 border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 font-medium resize-none"
                 placeholder="Describe exactly what you want your logo to look like. Include details about colors, style, symbols, text, and any specific requirements..."
               />
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-3 text-sm text-slate-500 font-medium">
                 {freeText.length}/500 characters
               </p>
             </div>
@@ -196,17 +197,17 @@ export default function LogoGenerator({ onGenerationComplete }: LogoGeneratorPro
 
         {/* Error Message */}
         {error && (
-          <div className="mt-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+          <div className="mt-6 bg-red-50 border-2 border-red-200 text-red-700 px-5 py-4 rounded-xl font-medium">
             {error}
           </div>
         )}
 
         {/* Generate Button */}
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <button
             onClick={handleGenerate}
             disabled={loading}
-            className="bg-indigo-600 text-white px-8 py-3 rounded-md font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-12 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             {loading ? 'Generating...' : 'Generate Logo'}
           </button>
@@ -215,36 +216,36 @@ export default function LogoGenerator({ onGenerationComplete }: LogoGeneratorPro
         {/* Loading States */}
         {loading && (
           <div className="mt-8 text-center">
-            <div className="inline-flex items-center space-x-2">
+            <div className="inline-flex items-center space-x-3 glass rounded-2xl px-6 py-4">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
-              <span className="text-gray-600">{loadingStep}</span>
+              <span className="text-slate-700 font-medium">{loadingStep}</span>
             </div>
           </div>
         )}
 
         {/* Generated Image */}
         {generatedImage && (
-          <div className="mt-8">
+          <div className="mt-10">
             <div className="text-center">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Your Generated Logo</h3>
-              <div className="bg-gray-50 rounded-lg p-4 inline-block">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6">Your Generated Logo</h3>
+              <div className="glass rounded-2xl p-6 inline-block shadow-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={generatedImage}
                   alt="Generated logo"
-                  className="max-w-full h-auto max-h-96"
+                  className="max-w-full h-auto max-h-96 rounded-xl"
                 />
               </div>
-              <div className="mt-4 space-x-4">
+              <div className="mt-6 flex gap-4 justify-center flex-wrap">
                 <button
                   onClick={handleDownload}
-                  className="bg-green-600 text-white px-6 py-2 rounded-md font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-200"
                 >
                   Download PNG
                 </button>
                 <button
                   onClick={() => setGeneratedImage(null)}
-                  className="bg-gray-600 text-white px-6 py-2 rounded-md font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                  className="glass hover:glass-strong text-slate-700 px-8 py-3 rounded-xl font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-200"
                 >
                   Generate Another
                 </button>
