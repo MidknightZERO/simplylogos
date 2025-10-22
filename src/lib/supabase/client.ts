@@ -21,6 +21,14 @@ console.log('🔧 USING VALUES:', {
   isHardcoded: !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 })
 
+console.log('🔧 ABOUT TO CREATE CLIENT WITH:', {
+  url: supabaseUrl,
+  keyLength: supabaseAnonKey.length,
+  keyType: typeof supabaseAnonKey,
+  keyIsEmpty: supabaseAnonKey === '',
+  keyIsUndefined: supabaseAnonKey === undefined
+})
+
 if (!supabaseUrl) {
   console.error('❌ NEXT_PUBLIC_SUPABASE_URL is undefined!')
   console.error('Available NEXT_PUBLIC_ env vars:', Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_')))
@@ -35,7 +43,16 @@ if (!supabaseAnonKey) {
 
 console.log('✅ Supabase environment variables loaded successfully')
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+let supabase: any
+try {
+  supabase = createClient(supabaseUrl, supabaseAnonKey)
+  console.log('✅ Supabase client created successfully')
+} catch (error) {
+  console.error('❌ Failed to create Supabase client:', error)
+  throw error
+}
+
+export { supabase }
 
 // Test function to verify Supabase connection
 export async function testSupabaseConnection() {
