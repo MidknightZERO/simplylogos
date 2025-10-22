@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { supabase } from '@/lib/supabase/client'
+import { useState, useEffect } from 'react'
+import { supabase, testSupabaseConnection } from '@/lib/supabase/client'
 import LogoRotation from '@/components/LogoRotation'
 import Link from 'next/link'
 
@@ -11,6 +11,11 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // Test Supabase connection on page load
+  useEffect(() => {
+    testSupabaseConnection()
+  }, [])
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,7 +35,9 @@ export default function SignupPage() {
     }
 
     try {
-      const { error } = await supabase.auth.signUp({
+      console.log('Attempting signup with:', { email, passwordLength: password.length })
+      
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -38,15 +45,36 @@ export default function SignupPage() {
         },
       })
 
+      console.log('Supabase response:', { data, error })
+
       if (error) {
+        console.error('Supabase signup error:', error)
         setError(error.message)
-      } else {
-        // Redirect to confirmation page
-        window.location.href = '/signup-confirmation'
+        setLoading(false)
+        return
       }
-    } catch {
+
+      // Check if signup was successful
+      if (data.user) {
+        console.log('User created successfully:', data.user)
+        // Check if email confirmation is required
+        if (data.user.email_confirmed_at === null) {
+          console.log('Email confirmation required, redirecting to confirmation page')
+          // Email confirmation required - redirect to confirmation page
+          window.location.href = '/signup-confirmation'
+        } else {
+          console.log('User already confirmed, redirecting to dashboard')
+          // User is already confirmed - redirect to dashboard
+          window.location.href = '/dashboard'
+        }
+      } else {
+        console.error('No user data returned from Supabase')
+        setError('Failed to create account. Please try again.')
+        setLoading(false)
+      }
+    } catch (err) {
+      console.error('Signup error:', err)
       setError('An unexpected error occurred')
-    } finally {
       setLoading(false)
     }
   }
