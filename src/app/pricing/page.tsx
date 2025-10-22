@@ -3,7 +3,7 @@
 import { useUser } from '@/hooks/useUser'
 import LogoRotation from '@/components/LogoRotation'
 import Link from 'next/link'
-import { CREDIT_PACKS, SUBSCRIPTION_TIERS } from '@/lib/stripe/config'
+import { CREDIT_PACKS, SUBSCRIPTION_TIERS } from '@/lib/stripe/constants'
 
 export default function PricingPage() {
   const { user } = useUser()
