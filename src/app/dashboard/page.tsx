@@ -94,6 +94,45 @@ export default function DashboardPage() {
     document.body.removeChild(link)
   }
 
+  const handleReroll = async (generationId: string) => {
+    if (!user) return
+    
+    // Check if user has reroll tokens
+    if (!userData || userData.reroll_tokens < 1) {
+      alert('You need at least 1 reroll token to reroll a logo.')
+      return
+    }
+
+    if (!confirm('Use 1 reroll token to regenerate this logo?')) {
+      return
+    }
+
+    try {
+      setLoadingData(true)
+      const response = await fetch('/api/reroll-logo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ generationId, userId: user.id }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        alert(data.error || 'Failed to reroll logo')
+        return
+      }
+
+      console.log('✅ Reroll successful:', data)
+      // Refetch data to show new generation and updated token count
+      await fetchUserData()
+    } catch (error) {
+      console.error('Error rerolling logo:', error)
+      alert('An error occurred while rerolling the logo')
+    } finally {
+      setLoadingData(false)
+    }
+  }
+
   if (loading || loadingData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -302,12 +341,25 @@ export default function DashboardPage() {
                           </span>
                         </div>
                         {generation.image_url && (
-                          <button
-                            onClick={() => handleDownload(generation.image_url!, generation.prompt)}
-                            className="w-full bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700"
-                          >
-                            Download
-                          </button>
+                          <div className="space-y-2">
+                            <button
+                              onClick={() => handleDownload(generation.image_url!, generation.prompt)}
+                              className="w-full bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700"
+                            >
+                              Download
+                            </button>
+                            <button
+                              onClick={() => handleReroll(generation.id)}
+                              disabled={!userData || userData.reroll_tokens < 1}
+                              className="w-full bg-purple-600 text-white px-3 py-1 rounded text-sm hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                              title={userData && userData.reroll_tokens < 1 ? 'No reroll tokens available' : 'Use 1 reroll token to regenerate'}
+                            >
+                              <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                              </svg>
+                              Reroll (1 token)
+                            </button>
+                          </div>
                         )}
                       </div>
                     </div>

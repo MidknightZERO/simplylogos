@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/client'
 import { generateLogo } from '@/lib/gemini/api'
-import { check_user_credits, update_user_credits } from '@/lib/supabase/functions'
+import { check_user_credits, update_user_credits, update_reroll_tokens } from '@/lib/supabase/functions'
 
 export async function POST(request: NextRequest) {
   try {
@@ -81,10 +81,16 @@ export async function POST(request: NextRequest) {
     // Deduct credits from user
     await update_user_credits(userId, -1)
 
+    // Grant 1 reroll token for spending a credit
+    await update_reroll_tokens(userId, 1)
+
+    console.log(`✅ Logo generated successfully for user ${userId}. Granted 1 reroll token.`)
+
     return NextResponse.json({
       success: true,
       generationId: generation.id,
       imageUrl,
+      rerollTokenGranted: true,
     })
   } catch (error) {
     console.error('Error in logo generation:', error)
