@@ -7,7 +7,6 @@ function getClientIp(req: NextRequest): string | null {
   if (xff) return xff.split(',')[0].trim()
   const xri = req.headers.get('x-real-ip')
   if (xri) return xri
-  // @ts-expect-error not typed on Next
   return (req as { ip?: string }).ip || null
 }
 
