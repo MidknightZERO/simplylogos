@@ -114,4 +114,4 @@ function getSupabaseAdminClient(): SupabaseClient {
 }
 
 // Only export admin client if we're on server-side
-export const supabaseAdmin = typeof window === 'undefined' ? getSupabaseAdminClient() : null as any
+export const supabaseAdmin = typeof window === 'undefined' ? getSupabaseAdminClient() : null as unknown as SupabaseClient
