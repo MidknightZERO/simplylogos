@@ -35,54 +35,28 @@ export interface LogoGenerationResponse {
 
 export async function generateLogo(request: LogoGenerationRequest): Promise<LogoGenerationResponse> {
   try {
-    const model = genAI.getGenerativeModel({ model: 'imagen-3.0-generate-001' })
-
     // Create a detailed prompt based on the request
-    let prompt: string
+    let promptText: string
 
     if (request.freeText) {
-      // Use free text input
-      prompt = `Create a professional, modern logo for a business based on this description: ${request.freeText}. 
-      
-      Requirements:
-      - Vector-style design
-      - Clean and professional appearance
-      - Suitable for business use
-      - Transparent background if possible
-      - High contrast for visibility
-      - Memorable and distinctive
-      - Modern typography if text is included
-      - Scalable design that works at different sizes`
+      promptText = request.freeText
     } else {
-      // Use structured input
-      prompt = `Create a professional, modern logo for a business.
-
-      Business Name: ${request.businessName}
-      Industry: ${request.industry}
-      Desired Elements: ${request.elements}
-
-      Requirements:
-      - Vector-style design
-      - Clean and professional appearance
-      - Suitable for business use in the ${request.industry} industry
-      - Transparent background if possible
-      - High contrast for visibility
-      - Memorable and distinctive
-      - Modern typography for the business name
-      - Scalable design that works at different sizes
-      - Incorporate the requested elements: ${request.elements}`
+      promptText = `Business Name: ${request.businessName}, Industry: ${request.industry}, Elements: ${request.elements}`
     }
 
-    const result = await model.generateContent(prompt)
-    const response = await result.response
+    console.log('🎨 Generating logo with prompt:', promptText)
 
-    // Note: The actual image generation response handling will depend on the Gemini API response format
-    // This is a placeholder - you'll need to adjust based on the actual API response
-    const imageData = response.text() // This might need to be adjusted based on actual API
-
+    // TEMPORARY: For now, return a placeholder response
+    // TODO: Implement actual Imagen 3 API integration when Vertex AI is set up
+    // Imagen 3 requires Google Cloud Vertex AI, not the standard Gemini API
+    
+    // Generate a placeholder logo URL (you can replace this with actual API integration)
+    // For testing, we'll create a data URL with the prompt embedded
+    const canvas = await createPlaceholderLogo(promptText)
+    
     return {
       success: true,
-      imageUrl: imageData, // This will likely be a base64 data URL or similar
+      imageUrl: canvas,
     }
   } catch (error) {
     console.error('Error generating logo:', error)
@@ -91,6 +65,34 @@ export async function generateLogo(request: LogoGenerationRequest): Promise<Logo
       error: error instanceof Error ? error.message : 'Unknown error occurred',
     }
   }
+}
+
+async function createPlaceholderLogo(prompt: string): Promise<string> {
+  // Create an SVG placeholder logo with the business details
+  const svg = `
+    <svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:rgb(99,102,241);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:rgb(139,92,246);stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="512" height="512" fill="url(#grad1)"/>
+      <text x="256" y="256" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">
+        ${prompt.substring(0, 30)}
+      </text>
+      <text x="256" y="300" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle" opacity="0.8">
+        Logo Generation
+      </text>
+      <text x="256" y="330" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.6">
+        Placeholder - Awaiting Imagen API
+      </text>
+    </svg>
+  `
+  
+  // Convert SVG to base64 data URL
+  const base64 = Buffer.from(svg).toString('base64')
+  return `data:image/svg+xml;base64,${base64}`
 }
 
 export function formatPrompt(request: LogoGenerationRequest): string {
