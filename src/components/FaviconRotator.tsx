@@ -20,8 +20,8 @@ export default function FaviconRotator() {
 
     const link = ensureFaviconLink()
 
-    // Build logo list 01.png - 48.png
-    const logos = Array.from({ length: 48 }, (_, i) => `/Logos/${String(i + 1).padStart(2, '0')}.png`)
+    // Build logo list 01.png - 50.png
+    const logos = Array.from({ length: 50 }, (_, i) => `/Logos/${String(i + 1).padStart(2, '0')}.png`)
 
     // Preload first 6
     logos.slice(0, 6).forEach((src) => {
