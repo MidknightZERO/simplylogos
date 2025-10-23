@@ -63,7 +63,12 @@ export default function HeroSection({ className = '', onScrollStateChange }: Her
       {/* Hero Section - Always h-screen to prevent layout shifts */}
       <div className="h-screen relative overflow-hidden" data-hero-section>
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-[#e7e7e7] to-purple-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100"></div>
+        
+        {/* Animated gradient orbs */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '4s' }}></div>
         
         {/* Content - Use opacity transitions instead of height changes */}
         <div className={`absolute inset-0 z-10 flex flex-col items-center justify-center px-4 transition-opacity duration-500 ${
@@ -82,23 +87,23 @@ export default function HeroSection({ className = '', onScrollStateChange }: Her
             </div>
             
             {/* Subtitle */}
-            <p className="text-xl text-gray-600 text-center mb-8 max-w-2xl">
+            <p className="text-2xl text-slate-700 text-center mb-12 max-w-2xl font-medium">
               Generate stunning, professional logos with AI in seconds. 
               Bring your brand to life with our intelligent design platform.
             </p>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-6">
             <Link
               href="/signup"
-              className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg shadow-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 hover:scale-105"
+              className="inline-flex items-center justify-center px-10 py-5 text-lg font-bold rounded-2xl shadow-2xl text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/50 transition-all duration-200 hover:scale-110 hover:shadow-3xl active:scale-95"
             >
               Get Started Free
             </Link>
             <Link
               href="/login"
-              className="inline-flex items-center px-8 py-4 border-2 border-indigo-600 text-lg font-medium rounded-lg text-indigo-600 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 hover:scale-105"
+              className="inline-flex items-center justify-center px-10 py-5 text-lg font-bold rounded-2xl text-indigo-700 glass hover:glass-strong focus:outline-none focus:ring-4 focus:ring-indigo-500/50 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
             >
               Sign In
             </Link>
