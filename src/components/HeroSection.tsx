@@ -14,8 +14,8 @@ export default function HeroSection({ className = '', onScrollStateChange }: Her
   const [isScrolled, setIsScrolled] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Complete array of logo filenames (01.png to 48.png)
-  const logoFiles = Array.from({ length: 48 }, (_, i) => `${String(i + 1).padStart(2, '0')}.png`)
+  // Complete array of logo filenames (01.png to 50.png)
+  const logoFiles = Array.from({ length: 50 }, (_, i) => `${String(i + 1).padStart(2, '0')}.png`)
 
   useEffect(() => {
     // Start rotation

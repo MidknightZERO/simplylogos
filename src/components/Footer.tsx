@@ -32,14 +32,11 @@ export default function Footer() {
         </div>
         
         <div className="mt-8 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <div className="flex space-x-6 mb-4 md:mb-0">
+          <div className="flex justify-center items-center text-sm text-gray-400">
+            <div className="flex space-x-6">
               <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
               <a href="/contact" className="hover:text-white transition-colors">Contact</a>
-            </div>
-            <div>
-              <p>Built with Next.js, Supabase, and Stripe</p>
             </div>
           </div>
         </div>

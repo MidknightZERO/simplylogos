@@ -11,7 +11,7 @@ export default function LogoRotation({ className = '' }: LogoRotationProps) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   // Complete array of logo filenames (01.png to 48.png)
-  const logoFiles = Array.from({ length: 48 }, (_, i) => `${String(i + 1).padStart(2, '0')}.png`)
+  const logoFiles = Array.from({ length: 50 }, (_, i) => `${String(i + 1).padStart(2, '0')}.png`)
 
   useEffect(() => {
     // Start rotation
