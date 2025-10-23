@@ -9,6 +9,7 @@ import ScrollToTopButton from '@/components/ScrollToTopButton'
 import Footer from '@/components/Footer'
 import LogoRotation from '@/components/LogoRotation'
 import UserMenu from '@/components/UserMenu'
+import ParticleBackground from '@/components/ParticleBackground'
 import Link from 'next/link'
 
 export default function HomePage() {
@@ -98,8 +99,11 @@ export default function HomePage() {
           </div>
 
           {/* Pricing Section */}
-          <div className="py-24 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-24 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
+            {/* Particle network background */}
+            <ParticleBackground />
+            
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <div className="text-center">
                 <h2 className="text-4xl font-extrabold text-slate-900 sm:text-5xl">
                   Simple, Transparent Pricing
@@ -285,8 +289,11 @@ export default function HomePage() {
           </div>
 
           {/* Video Section */}
-          <div className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-20 bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+            {/* Particle network background */}
+            <ParticleBackground />
+            
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <div className="text-center">
                 <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
                   See SimplyLogos in Action
