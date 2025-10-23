@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# favicon (using dynamic rotation)
+src/app/favicon.ico
+
 # debug
 npm-debug.log*
 yarn-debug.log*
