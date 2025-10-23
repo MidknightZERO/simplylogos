@@ -36,7 +36,7 @@ export default function LogoRotation({ className = '' }: LogoRotationProps) {
 
   return (
     <div className={`flex items-center ${className}`}>
-      <div className="relative w-8 h-8 mr-2">
+      <div className="relative w-9 h-9">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/Logos/${currentLogo}`}
@@ -45,7 +45,6 @@ export default function LogoRotation({ className = '' }: LogoRotationProps) {
           style={{ imageRendering: 'auto' }}
         />
       </div>
-      <span className="text-2xl font-bold text-gray-900">SimplyLogos</span>
     </div>
   )
 }

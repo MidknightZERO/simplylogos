@@ -11,8 +11,8 @@ export default function StickyHeader({ isVisible }: StickyHeaderProps) {
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Complete array of logo filenames (01.png to 48.png)
-  const logoFiles = Array.from({ length: 48 }, (_, i) => `${String(i + 1).padStart(2, '0')}.png`)
+  // Complete array of logo filenames (01.png to 50.png)
+  const logoFiles = Array.from({ length: 50 }, (_, i) => `${String(i + 1).padStart(2, '0')}.png`)
 
   useEffect(() => {
     // Start rotation
@@ -41,8 +41,11 @@ export default function StickyHeader({ isVisible }: StickyHeaderProps) {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <div className="flex items-center">
-            <div className="relative w-8 h-8 mr-3">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center hover:opacity-80 transition-opacity"
+          >
+            <div className="relative w-9 h-9">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`/Logos/${currentLogo}`}
@@ -51,8 +54,7 @@ export default function StickyHeader({ isVisible }: StickyHeaderProps) {
                 style={{ imageRendering: 'auto' }}
               />
             </div>
-            <span className="text-lg font-semibold text-gray-900">SimplyLogos</span>
-          </div>
+          </button>
           <div className="flex items-center space-x-4">
             <Link
               href="/login"
