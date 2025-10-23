@@ -98,30 +98,30 @@ export default function HomePage() {
           </div>
 
           {/* Pricing Section */}
-          <div className="py-20 bg-white">
+          <div className="py-24 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
-                <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                <h2 className="text-4xl font-extrabold text-slate-900 sm:text-5xl">
                   Simple, Transparent Pricing
                 </h2>
-                <p className="mt-4 text-lg text-gray-600">
+                <p className="mt-4 text-xl text-slate-600">
                   Pay only for what you use. No hidden fees, no subscriptions required.
                 </p>
               </div>
               
-              <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {/* Single Credit */}
-                <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+                <div className="glass rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900">Single Logo</h3>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-indigo-600">£5</span>
-                      <span className="text-gray-600">/logo</span>
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">Single Logo</h3>
+                    <div className="mt-6">
+                      <span className="text-5xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">£5</span>
+                      <span className="text-slate-600 block mt-2">/logo</span>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">Perfect for trying us out</p>
+                    <p className="mt-6 text-slate-600">Perfect for trying us out</p>
                     <Link
                       href="/signup"
-                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                      className="mt-8 w-full inline-flex justify-center items-center px-6 py-3 text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
                     >
                       Get Started
                     </Link>
@@ -129,17 +129,17 @@ export default function HomePage() {
                 </div>
 
                 {/* Small Pack */}
-                <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+                <div className="glass rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900">Small Pack</h3>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-indigo-600">£10</span>
-                      <span className="text-gray-600">/10 logos</span>
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">Small Pack</h3>
+                    <div className="mt-6">
+                      <span className="text-5xl font-extrabold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">£10</span>
+                      <span className="text-slate-600 block mt-2">/10 logos</span>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">50% savings</p>
+                    <p className="mt-6 text-emerald-600 font-semibold">50% savings</p>
                     <Link
                       href="/signup"
-                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                      className="mt-8 w-full inline-flex justify-center items-center px-6 py-3 text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
                     >
                       Buy Now
                     </Link>
@@ -147,38 +147,38 @@ export default function HomePage() {
                 </div>
 
                 {/* Medium Pack */}
-                <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+                <div className="glass rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900">Medium Pack</h3>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-indigo-600">£50</span>
-                      <span className="text-gray-600">/100 logos</span>
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">Medium Pack</h3>
+                    <div className="mt-6">
+                      <span className="text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">£50</span>
+                      <span className="text-slate-600 block mt-2">/100 logos</span>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">90% savings</p>
+                    <p className="mt-6 text-emerald-600 font-semibold">90% savings</p>
                     <Link
                       href="/signup"
-                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                      className="mt-8 w-full inline-flex justify-center items-center px-6 py-3 text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
                     >
                       Buy Now
                     </Link>
                   </div>
                 </div>
 
-                {/* Large Pack */}
-                <div className="bg-white border-2 border-indigo-600 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 relative">
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-indigo-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Best Value</span>
+                {/* Large Pack - Featured */}
+                <div className="glass-strong rounded-2xl p-8 shadow-2xl hover:shadow-3xl hover:-translate-y-3 transition-all duration-300 relative border-2 border-indigo-500/50 group">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 text-sm font-bold rounded-full shadow-lg">Best Value</span>
                   </div>
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900">Large Pack</h3>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-indigo-600">£250</span>
-                      <span className="text-gray-600">/1000 logos</span>
+                  <div className="text-center mt-2">
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">Large Pack</h3>
+                    <div className="mt-6">
+                      <span className="text-5xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">£250</span>
+                      <span className="text-slate-600 block mt-2">/1000 logos</span>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">95% savings - Just 25p per logo!</p>
+                    <p className="mt-6 text-purple-600 font-bold">95% savings - Just 25p per logo!</p>
                     <Link
                       href="/signup"
-                      className="mt-6 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                      className="mt-8 w-full inline-flex justify-center items-center px-6 py-3 text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200"
                     >
                       Buy Now
                     </Link>
@@ -186,10 +186,12 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="mt-12 text-center">
-                <p className="text-sm text-gray-500">
-                  All prices include VAT. Credits never expire. Secure payment via Stripe.
-                </p>
+              <div className="mt-16 text-center">
+                <div className="glass inline-block rounded-2xl px-8 py-4 shadow-md">
+                  <p className="text-sm text-slate-700 font-medium">
+                    All prices include VAT • Credits never expire • Secure payment via Stripe
+                  </p>
+                </div>
               </div>
             </div>
           </div>
