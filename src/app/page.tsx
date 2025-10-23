@@ -349,9 +349,12 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Particle network background */}
+      <ParticleBackground />
+      
       {/* Header with Logo Rotation */}
-      <header className="bg-[#e7e7e7] shadow sticky top-0 z-50">
+      <header className="bg-white/80 backdrop-blur-sm shadow sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
@@ -366,7 +369,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8 relative z-10">
         <div className="px-4 py-8 sm:px-0">
           <LogoGenerator />
         </div>

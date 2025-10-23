@@ -3,6 +3,7 @@
 import { useUser } from '@/hooks/useUser'
 import LogoRotation from '@/components/LogoRotation'
 import UserMenu from '@/components/UserMenu'
+import ParticleBackground from '@/components/ParticleBackground'
 import Link from 'next/link'
 import { CREDIT_PACKS, SUBSCRIPTION_TIERS } from '@/lib/stripe/constants'
 
@@ -108,9 +109,12 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#e7e7e7]">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Particle network background */}
+      <ParticleBackground />
+      
       {/* Header */}
-      <header className="bg-[#e7e7e7] shadow sticky top-0 z-50">
+      <header className="bg-white/80 backdrop-blur-sm shadow sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
@@ -142,7 +146,7 @@ export default function PricingPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">
             Simple, Transparent Pricing

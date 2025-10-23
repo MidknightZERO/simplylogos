@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase/client'
 import LogoRotation from '@/components/LogoRotation'
 import UserMenu from '@/components/UserMenu'
 import LoadingModal from '@/components/LoadingModal'
+import ParticleBackground from '@/components/ParticleBackground'
 import Link from 'next/link'
 
 interface Generation {
@@ -161,9 +162,12 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#e7e7e7]">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Particle network background */}
+      <ParticleBackground />
+      
       {/* Header */}
-      <header className="bg-[#e7e7e7] shadow sticky top-0 z-50">
+      <header className="bg-white/80 backdrop-blur-sm shadow sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
@@ -178,7 +182,7 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 relative z-10">
         <div className="px-4 py-6 sm:px-0">
           {/* Welcome Section */}
           <div className="bg-white overflow-hidden shadow rounded-lg mb-6">
