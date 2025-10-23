@@ -15,7 +15,12 @@ export default function Footer() {
           
           <div className="flex items-center space-x-2">
             <span className="text-gray-400 text-sm">Powered by</span>
-            <div className="flex items-center space-x-2">
+            <a 
+              href="https://www.saasquatch.co.uk" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center transition-transform duration-200 hover:scale-105"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/SaaSquatch.png"
@@ -26,8 +31,7 @@ export default function Footer() {
                   e.currentTarget.style.display = 'none'
                 }}
               />
-              <span className="text-indigo-400 font-semibold text-sm">SaaSquatch</span>
-            </div>
+            </a>
           </div>
         </div>
         
