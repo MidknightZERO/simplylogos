@@ -89,7 +89,7 @@ export default function HomePage() {
               </div>
 
               <div className="mt-16 text-center">
-                <div className="glass inline-block rounded-2xl px-8 py-4 shadow-md">
+                <div className="bg-slate-100 inline-block rounded-2xl px-8 py-4 shadow-md">
                   <p className="text-sm text-slate-700 font-medium">
                     <span className="font-bold text-indigo-600">1 credit per logo</span> • Instant download • Commercial use included
                   </p>
@@ -115,7 +115,7 @@ export default function HomePage() {
               
               <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {/* Single Credit */}
-                <div className="glass rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
                   <div className="text-center">
                     <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">Single Logo</h3>
                     <div className="mt-6">
@@ -133,7 +133,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Small Pack */}
-                <div className="glass rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
                   <div className="text-center">
                     <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">Small Pack</h3>
                     <div className="mt-6">
@@ -151,7 +151,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Medium Pack */}
-                <div className="glass rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
                   <div className="text-center">
                     <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">Medium Pack</h3>
                     <div className="mt-6">
@@ -169,7 +169,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Large Pack - Featured */}
-                <div className="glass-strong rounded-2xl p-8 shadow-2xl hover:shadow-3xl hover:-translate-y-3 transition-all duration-300 relative border-2 border-indigo-500/50 group">
+                <div className="bg-white rounded-2xl p-8 shadow-2xl hover:shadow-3xl hover:-translate-y-3 transition-all duration-300 relative border-2 border-indigo-500 group">
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 text-sm font-bold rounded-full shadow-lg">Best Value</span>
                   </div>
@@ -191,7 +191,7 @@ export default function HomePage() {
               </div>
 
               <div className="mt-16 text-center">
-                <div className="glass inline-block rounded-2xl px-8 py-4 shadow-md">
+                <div className="bg-white inline-block rounded-2xl px-8 py-4 shadow-md">
                   <p className="text-sm text-slate-700 font-medium">
                     All prices include VAT • Credits never expire • Secure payment via Stripe
                   </p>
