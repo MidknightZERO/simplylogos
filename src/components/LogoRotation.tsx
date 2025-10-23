@@ -36,13 +36,17 @@ export default function LogoRotation({ className = '' }: LogoRotationProps) {
 
   return (
     <div className={`flex items-center ${className}`}>
-      <div className="relative w-9 h-9">
+      <div className="relative w-20 h-20 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/Logos/${currentLogo}`}
           alt="SimplyLogos"
-          className="w-full h-full object-contain"
-          style={{ imageRendering: 'auto' }}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ 
+            imageRendering: 'auto',
+            transform: 'scale(1.8)',
+            transformOrigin: 'center'
+          }}
         />
       </div>
     </div>
