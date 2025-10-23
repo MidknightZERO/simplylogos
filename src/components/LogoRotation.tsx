@@ -44,7 +44,7 @@ export default function LogoRotation({ className = '' }: LogoRotationProps) {
           className="absolute inset-0 w-full h-full object-cover"
           style={{ 
             imageRendering: 'auto',
-            transform: 'scale(1.8)',
+            transform: 'scale(1.4)',
             transformOrigin: 'center'
           }}
         />
