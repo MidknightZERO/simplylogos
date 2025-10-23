@@ -86,3 +86,28 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Animated dots for loading states */
+@keyframes dotFade {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-dots .dot-1 {
+  animation: dotFade 1.4s infinite;
+  animation-delay: 0s;
+}
+
+.animate-dots .dot-2 {
+  animation: dotFade 1.4s infinite;
+  animation-delay: 0.2s;
+}
+
+.animate-dots .dot-3 {
+  animation: dotFade 1.4s infinite;
+  animation-delay: 0.4s;
+}

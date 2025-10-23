@@ -5,6 +5,7 @@ import { useUser } from '@/hooks/useUser'
 import { supabase } from '@/lib/supabase/client'
 import LogoRotation from '@/components/LogoRotation'
 import UserMenu from '@/components/UserMenu'
+import LoadingModal from '@/components/LoadingModal'
 import Link from 'next/link'
 
 interface Generation {
@@ -29,6 +30,7 @@ export default function DashboardPage() {
   const [userData, setUserData] = useState<UserData | null>(null)
   const [generations, setGenerations] = useState<Generation[]>([])
   const [loadingData, setLoadingData] = useState(true)
+  const [isRerolling, setIsRerolling] = useState(false)
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -109,7 +111,7 @@ export default function DashboardPage() {
     }
 
     try {
-      setLoadingData(true)
+      setIsRerolling(true)
       const response = await fetch('/api/reroll-logo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -130,11 +132,11 @@ export default function DashboardPage() {
       console.error('Error rerolling logo:', error)
       alert('An error occurred while rerolling the logo')
     } finally {
-      setLoadingData(false)
+      setIsRerolling(false)
     }
   }
 
-  if (loading || loadingData) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
@@ -356,6 +358,9 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+      
+      {/* Loading Modal for Reroll */}
+      <LoadingModal isOpen={isRerolling} message="Rerolling" />
     </div>
   )
 }

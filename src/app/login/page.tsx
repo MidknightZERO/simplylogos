@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import LogoRotation from '@/components/LogoRotation'
+import ParticleBackground from '@/components/ParticleBackground'
 import Link from 'next/link'
 
 export default function LoginPage() {
@@ -59,8 +60,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#e7e7e7] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Particle network background */}
+      <ParticleBackground />
+      
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-2xl relative z-10">
         <div>
           <div className="flex justify-center mb-6">
             <LogoRotation />
@@ -132,7 +136,7 @@ export default function LoginPage() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-gray-50 text-gray-500">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">Or continue with</span>
               </div>
             </div>
 
