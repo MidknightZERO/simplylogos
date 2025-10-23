@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import ParticleBackground from './ParticleBackground'
 
 interface HeroSectionProps {
   className?: string
@@ -64,6 +65,9 @@ export default function HeroSection({ className = '', onScrollStateChange }: Her
       <div className="h-screen relative overflow-hidden" data-hero-section>
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100"></div>
+        
+        {/* Particle network background */}
+        <ParticleBackground />
         
         {/* Animated gradient orbs */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
